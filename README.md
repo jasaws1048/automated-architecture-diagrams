@@ -5,17 +5,22 @@ Code-driven templates for generating automated software architecture diagrams, s
 ##### Requirements
 * Python 3
 * Pip 3
+* graphviz
+* diagrams
 
 ```bash
 $ brew install python3
+$ brew install graphviz
 ```
 
+Verify 
 Pip3 is installed with Python3
 
 ##### Installation
 To install virtualenv via pip run:
 ```bash
 $ pip3 install virtualenv
+$ pip install diagrams
 ```
 
 ##### Usage
@@ -28,20 +33,20 @@ Activate the virtualenv:
 ```bash
 $ source <desired-path>/bin/activate
 ```
+Execute the code:
+```bash
+$ python architecture.py
+```
 
 Deactivate the virtualenv:
 ```bash
 $ deactivate
 ```
 
-
-[About Virtualenv](https://virtualenv.pypa.io/en/stable/)
-
-brew install graphviz
+Troubleshoot:
+```bash
 dot -V
 export PATH="/opt/homebrew/bin:$PATH"
 import shutil
 print(shutil.which('dot'))
-pip uninstall diagrams
-pip install diagrams
-python3 architecture.py
+```
