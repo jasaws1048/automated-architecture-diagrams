@@ -10,16 +10,10 @@ from diagrams.custom import Custom
 
 graph_attr = {'ranksep': '1.0'} #, 'rankdir': 'TB'}
 
-with Diagram("Two Tier Application Architecture", show=False, graph_attr=graph_attr):
+with Diagram("Infrastructure Architecture", show=False, graph_attr=graph_attr):
 	with Cluster("User Network"):
 		client = Client("User")
 		internet = Internet("Internet")
-
-	with Cluster("CI/CD Pipeline"):
-		with Cluster("Source Code"):
-			react = React("React")
-			terraform = Custom("Terraform", "./tf.png")
-		github_actions = Custom("GitHub Actions", "./ghactions.png")
 
 	with Cluster("AWS Cloud"):
 		with Cluster("VPC"):
@@ -37,6 +31,7 @@ with Diagram("Two Tier Application Architecture", show=False, graph_attr=graph_a
 
 			with Cluster("Private Subnet for Frontend"):
 				# private_subnet_frontend = Subnet("Private Subnet")
+				react = React("React")
 				frontend = EC2("Frontend (React)")
 				# private_subnet_frontend >> frontend
 
@@ -45,8 +40,6 @@ with Diagram("Two Tier Application Architecture", show=False, graph_attr=graph_a
 			grafana = Grafana("Grafana")
 
 	client >> internet >> dns
-	react >> github_actions
-	terraform >> github_actions
 	lb >> Edge(label="HTTP/HTTPS") >> frontend
 	lb >> Edge(label="HTTP/HTTPS") >> backend
 	backend >> Edge(label="Database Connection") >> db
@@ -54,9 +47,6 @@ with Diagram("Two Tier Application Architecture", show=False, graph_attr=graph_a
 	frontend >> prometheus
 	db >> prometheus
 	prometheus >> grafana
-
-	# Connecting CI/CD Pipeline to AWS Cloud
-	github_actions >> Edge(color="blue", style="dashed", label="Deploy to AWS Cloud") >> dns
 	
 # Creating Custom Node 
 # Custom Node: We can create a custom node to represent the subnet. 
